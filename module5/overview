@@ -1,0 +1,47 @@
+thực hành làm module quản lý người dùng (users) bao gồm các chức năng
+
+Nhóm 1: xác thực truy cập
+- đăng nhập
+- đăng ký
+- đăng xuất
+- quên mật khẩu
+- kích hoạt tài khoản
+
+Nhóm 2: quản lý người dùng
+- xác thực người dùng đăng nhập
+- thêm người dùng
+- sửa người dùng
+- xóa người dùng
+- hiển thị danh sách người dùng
+- phân trang
+- tìm kiếm, lọc
+
+Nội dung chi tiết:
+01; Thiết kế database
+
+- bảng users:
++ id int primary key
++ email varchar(100)
++ password varchar (50)
++ fullname varchar(50)
++ phone varchar(20)
++ forgotToken varchar(50)
++ activeToken varchar(50)
++ createAt datetime
++ updateAt datetime
+
+- table loginToken
++ id int primary key
++ user_id int foreign key => users(id)
++ token varchar(50)
+
+02; xây dựng cấu trúc thư mục, file
+03; code chức năng điều hướng modules (routes)
+04; tích hợp giao diện boostrap
+05; liên kết database
+06; session
+07; function sendEmail
+08; function filter, validate
+09; hàm password_hass
+
+passSendEmail: gutscnvptgczmlgv
