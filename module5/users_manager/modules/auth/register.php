@@ -74,13 +74,13 @@ if (isPost()) {
 
         $insertStatus = insert('users', $dataInsert);
         if ($insertStatus) {
-            $linkActive = _WEB_HOST_ROOT.'?module=auth&action=active&token='.$activeToken;
+            $linkActive =_WEB_HOST_ROOT.'?module=auth&action=active&token='.$activeToken;
             // send email
             $subject = $body['fullname'].'Vui lòng kích hoạt tài khoản';
-            $content = 'Chào bạn'.$body['fullname'].'<br/>';
+            $content = 'Chào bạn '.$body['fullname'].'<br/>';
             $content.='Vui lòng click vào link dưới đây để kích hoạt tài khoản: <br />';
             $content.=$linkActive.'<br/>';
-
+            // echo _WEB_HOST_ROOT; die;
             $senStatus = sendEmail($body['email'], $subject, $content);
             if ($senStatus) {
                 setFlashData('msg', 'Đăng ký tài khoản thành công, Vui lòng kiểm tra Email để kích hoạt tài khoản');

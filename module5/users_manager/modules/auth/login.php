@@ -5,11 +5,13 @@ $data = [
     'pageTitle' => 'Login'
 ];
 layout('headerLogin', $data);
-
+$msg = getFlashData('msg');
+$msg_type = getFlashData('msg_type');
 ?>
 <div class='row'>
     <div class='col-6' style="margin: 20px auto">
         <h3 class="text-center">LOGIN</h3>
+        <?php getMsg($msg, $msg_type) ?>
         <form action="" method="post">
             <div class="form-group">
                 <label for="">Email</label>
