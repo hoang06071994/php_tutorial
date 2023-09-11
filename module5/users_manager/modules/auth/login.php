@@ -5,6 +5,63 @@ $data = [
     'pageTitle' => 'Login'
 ];
 layout('headerLogin', $data);
+
+$checkLogin = false;
+if (getSession('loginToken')) {
+    $tokenLogin = getSession('loginToken');
+    $queryToken = firstRaw("SELECT userId FROM logintoken WHERE token='$tokenLogin'");
+    if (!empty($queryToken)) {
+        $checkLogin = true;
+    } else {
+        removeSession('loginToken');
+    }
+}
+if (empty($checkLogin)) {
+    redirect('?module=users');
+}
+// xử lý đăng nhập
+if (isPost()) {
+    $body = getBody();
+    if (!empty(trim($body['email'])) && !empty(trim($body['password']))) {
+        $email = $body['email'];
+        $password = $body['password'];
+
+        // truy van lay thong tin use
+        $userQuery = firstRaw("SELECT id, password FROM users WHERE email='$email'");
+        if (!empty($userQuery)) {
+            $passwordHash = $userQuery['password'];
+            $userId = $userQuery['id'];
+            if (password_verify($password, $passwordHash)) {
+                // tạo token login
+                $tokenLogin = sha1(uniqid().time());
+                // inser data
+                $dataToken = [
+                    'userId' => $userId,
+                    'token' => $tokenLogin,
+                    'createAt' => date('Y-m-d H:i:s')
+                ];
+                $insetTokenStatus = insert('loginToken', $dataToken);
+                if ($insetTokenStatus) {
+                    setSession('loginToken', $tokenLogin);
+                    redirect('?module=users');
+                } else {
+                    setFlashData('msg', 'loi he thong, ban khong the dang nhap vao luc nay');
+                    setFlashData('msg_type', 'danger');
+                }
+            } else {
+                setFlashData('msg', 'Mat khau khong chinh xac');
+                setFlashData('msg_type', 'danger');
+            }
+        } else {
+            setFlashData('msg', 'email khong ton tai');
+            setFlashData('msg_type', 'danger');
+        }
+    } else {
+        setFlashData('msg', 'Vui long nhap email va password');
+        setFlashData('msg_type', 'danger');
+    }
+    redirect('?module=auth&action=login');
+}
 $msg = getFlashData('msg');
 $msg_type = getFlashData('msg_type');
 ?>
