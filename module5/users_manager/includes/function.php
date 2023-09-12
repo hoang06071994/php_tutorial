@@ -176,3 +176,16 @@ function form_error($fileName, $errors, $beforeHtml='', $afterHtml='') {
 function getOldValue($old, $fileName, $default=null) {
     return (!empty($old[$fileName])) ? $old[$fileName] : $default;
 }
+
+function isLogin() {
+    $checkLogin = false;
+    $tokenLogin = getSession('loginToken');
+    $queryToken = firstRaw("SELECT userId FROM loginToken WHERE token='$tokenLogin'");
+    if (!empty($queryToken)) {
+        $checkLogin = true;
+    } else {
+        $checkLogin = false;
+    }
+    
+    return $checkLogin;
+}

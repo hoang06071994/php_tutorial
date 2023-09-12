@@ -6,17 +6,7 @@ $data = [
 ];
 layout('headerLogin', $data);
 
-$checkLogin = false;
-if (getSession('loginToken')) {
-    $tokenLogin = getSession('loginToken');
-    $queryToken = firstRaw("SELECT userId FROM logintoken WHERE token='$tokenLogin'");
-    if (!empty($queryToken)) {
-        $checkLogin = true;
-    } else {
-        removeSession('loginToken');
-    }
-}
-if (empty($checkLogin)) {
+if (isLogin()) {
     redirect('?module=users');
 }
 // xử lý đăng nhập

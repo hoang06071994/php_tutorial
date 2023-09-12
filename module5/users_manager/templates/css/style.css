@@ -2,3 +2,13 @@
     color: red;
     font-size: 90%;
 }
+.content {
+    padding: 10px;
+}
+.navar-wrap{
+    position: relative;
+}
+.info {
+    position: absolute;
+    right: 2%;
+}
