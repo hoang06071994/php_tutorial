@@ -7,8 +7,16 @@
 }
 .navar-wrap{
     position: relative;
+    font-size: 20px;
 }
 .info {
     position: absolute;
     right: 2%;
+}
+
+/* list user */
+.list_user_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }

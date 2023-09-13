@@ -10,6 +10,7 @@ if (!isLogin()) {
     <title>Quản lý người dùng</title>
     <meta charset='utf-8' />
     <link type="text/css" rel='stylesheet' href="<?php echo _WEB_HOST_TEMPLATE ?>/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <link type="text/css" rel='stylesheet' href="<?php echo _WEB_HOST_TEMPLATE ?>/css/fontawesome.min.css" />
     <link type="text/css" rel='stylesheet' href="<?php echo _WEB_HOST_TEMPLATE ?>/css/style.css" />
 </head>
@@ -17,12 +18,12 @@ if (!isLogin()) {
 <body>
     <header>
         <div class="container content">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <a class="navbar-brand" href="#">Navbar</a>
+            <nav class="navbar navbar-expand-xxl navbar-light bg-light">
+                <a class="navbar-brand " href="#">Navbar</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse navar-wrap" id="navbarSupportedContent">
+                <div class="collapse navbar-collapse navar-wrap align-items-center" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item active">
                             <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
