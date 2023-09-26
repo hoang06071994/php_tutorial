@@ -9,6 +9,8 @@ layout('headerLogin', $data);
 if (isLogin()) {
     redirect('?module=users');
 }
+autoRemoveTokenLogin();
+
 // xử lý đăng nhập
 if (isPost()) {
     $body = getBody();
@@ -17,7 +19,7 @@ if (isPost()) {
         $password = $body['password'];
 
         // truy van lay thong tin use
-        $userQuery = firstRaw("SELECT id, password FROM users WHERE email='$email'");
+        $userQuery = firstRaw("SELECT id, password FROM users WHERE email='$email' AND status=1");
         if (!empty($userQuery)) {
             $passwordHash = $userQuery['password'];
             $userId = $userQuery['id'];
@@ -43,7 +45,7 @@ if (isPost()) {
                 setFlashData('msg_type', 'danger');
             }
         } else {
-            setFlashData('msg', 'email khong ton tai');
+            setFlashData('msg', 'email khong ton tai hoặc chưa được kích hoạt');
             setFlashData('msg_type', 'danger');
         }
     } else {

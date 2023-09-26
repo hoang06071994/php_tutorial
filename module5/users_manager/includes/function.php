@@ -182,10 +182,33 @@ function isLogin() {
     $tokenLogin = getSession('loginToken');
     $queryToken = firstRaw("SELECT userId FROM loginToken WHERE token='$tokenLogin'");
     if (!empty($queryToken)) {
-        $checkLogin = true;
+        $checkLogin = $queryToken;
     } else {
         $checkLogin = false;
     }
     
     return $checkLogin;
+}
+
+// auto logout settime out 15'
+function autoRemoveTokenLogin() {
+    $allUser = getRaw("SELECT * FROM users WHERE status=1");
+    if (!empty($allUser)) {
+        foreach ($allUser as $user) {
+            $now = date('Y-m-d H:i:s');
+            $before = $user['lastActivity'] ?? '';
+            $diff = strtotime($now)-strtotime($before);
+            $diff = floor($diff/60);
+
+            if ($diff >= 15) {
+                delete('logintoken', "userId=".$user['id']);
+            }
+        }
+    }
+}
+
+// lưu thời gian đăng nhập cuối cùng của user
+function saveActivity() {
+    $userId = isLogin()['userId'];
+    update('users', ['lastActivity'=>date('Y-m-d H:i:s')], "id=$userId");
 }

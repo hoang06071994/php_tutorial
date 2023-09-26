@@ -3,6 +3,8 @@ if (!defined('_INCODE')) die('Acess deined...');
 if (!isLogin()) {
     redirect('?module=auth&action=login');
 }
+saveActivity(); // Lưu lại hoạt động cuối cùng của user
+autoRemoveTokenLogin();
 ?>
 <html>
 

@@ -5,10 +5,11 @@ $data = [
     'pageTitle' => 'Edit user'
 ];
 layout('header', $data);
+
 $body = getBody();
 if (!empty($body['id'])) {
-    $id = $body['id'];
-    $userDetail = firstRaw("SELECT * FROM users WHERE id='$id'");
+    $userId = $body['id'];
+    $userDetail = firstRaw("SELECT * FROM users WHERE id='$userId'");
     if (!empty($userDetail)) {
         setFlashData('userDetail', $userDetail);
     } else {
@@ -20,7 +21,6 @@ if (!empty($body['id'])) {
 
 if (isPost()) {
     // validate form
-     //get value
     $errors = [];
     // validate full name
     if (empty(trim($body['fullname']))) {
@@ -46,7 +46,7 @@ if (isPost()) {
             $errors['email']['isEmail'] = 'invalid email';
         } else {
             $email = trim($body['email']);
-            $sql = "SELECT id FROM users WHERE email = '$email' AND id<>$userId";
+            $sql = "SELECT id FROM users WHERE email='$email' AND id<>$userId";
             if (getRows($sql) > 0) {
                 $errors['email']['unique'] = 'email already';
             }
@@ -77,7 +77,6 @@ if (isPost()) {
         }
         $condition = "id=$userId";
         $updateStatus = update('users', $dataUpdate, $condition);
-        echo $updateStatus; die;
         if ($updateStatus) {
             setFlashData('msg', 'Update success !');
             setFlashData('msg_type', 'success');
@@ -121,6 +120,7 @@ if (!empty($userDetail)) {
                         class="form-control"
                         value="<?php echo getOldValue($old, 'fullname'); ?>"
                     >
+                    <?php echo form_error('fullname', $errors, '<span class="error">', '</span>'); ?>
                 </div>
                 <div class="form-group">
                     <label for="">Email</label>
@@ -131,6 +131,7 @@ if (!empty($userDetail)) {
                         class="form-control"
                         value="<?php echo getOldValue($old, 'email'); ?>"
                     >
+                    <?php echo form_error('email', $errors, '<span class="error">', '</span>'); ?>
                 </div>
                 <div class="form-group">
                     <label for="">Phone</label>
@@ -141,6 +142,7 @@ if (!empty($userDetail)) {
                         class="form-control"
                         value="<?php echo getOldValue($old, 'phone'); ?>"
                     >
+                    <?php echo form_error('phone', $errors, '<span class="error">', '</span>'); ?>
                 </div>
             </div>
             <div class="col">
@@ -149,18 +151,20 @@ if (!empty($userDetail)) {
                     <input
                         type="password"
                         name="password"
-                        placeholder="Khong nhap neu khong thay doi"
+                        placeholder="Password (Khong nhap neu khong thay doi)"
                         class="form-control"
                     >
+                    <?php echo form_error('password', $errors, '<span class="error">', '</span>'); ?>
                 </div>
                 <div class="form-group">
                     <label for="">Confirm password</label>
                     <input
                         type="password"
                         name="confirm_password"
-                        placeholder="Confirm password"
+                        placeholder="Confirm password (Khong nhap neu khong thay doi)"
                         class="form-control"
                     >
+                    <?php echo form_error('confirm_password', $errors, '<span class="error">', '</span>'); ?>
                 </div>
                 <div class="form-group">
                     <label for="">Status</label>
@@ -175,7 +179,7 @@ if (!empty($userDetail)) {
                 <div class="col">
                     <button type="submit" class="btn btn-primary block">Save</button>
                     <a href="?module=users" class="btn btn-success">Back</a>
-                    <input type="hidden" name="<?php echo $userId; ?>">
+                    <input type="hidden" name="id" value="<?php echo $userId; ?>">
                 </div>
             </div>
         </div>

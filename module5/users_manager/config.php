@@ -1,5 +1,5 @@
 <?php
-
+date_default_timezone_set('Asia/Ho_Chi_Minh');
 const _MODULE_DEFAULT = 'home'; //module default
 const _ACTION_DEFAULT = 'list'; // action default
 const _INCODE = 'true'; // ngăn chặn hành vi người dùng truy cập trực tiếp vào file

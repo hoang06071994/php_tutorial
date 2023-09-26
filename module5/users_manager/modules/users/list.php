@@ -146,7 +146,7 @@ $msgType = getFlashData('msg_type');
                             </a>
                         </td>
                         <td>
-                            <a href="#" onclick="return confirm('Are you sure ?')" class="btn btn-danger btn-sm">
+                            <a href="<?php echo _WEB_HOST_ROOT.'?module=users&action=delete&id='.$item['id']; ?>" onclick="return confirm('Are you sure ?')" class="btn btn-danger btn-sm">
                                 <i class="fa-solid fa-trash"></i>
                             </a>
                         </td>
