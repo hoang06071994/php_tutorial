@@ -66,7 +66,7 @@ if (!empty(getBody()['page'])) {
 $offset = ($page - 1) * $perPage;
 
 // get data
-$listAll = getRaw("SELECT * FROM users $filter ORDER BY createAt LIMIT $offset, $perPage");
+$listAll = getRaw("SELECT * FROM users $filter ORDER BY createAt DESC LIMIT $offset, $perPage");
 
 $queryString = null;
 if (!empty($_SERVER['QUERY_STRING'])) {
@@ -76,17 +76,20 @@ if (!empty($_SERVER['QUERY_STRING'])) {
     $queryString = trim($queryString, '&');
     $queryString = '&'.$queryString;
 }
+$msg = getFlashData('msg');
+$msgType = getFlashData('msg_type');
 ?>
 
 <div class='container'>
     <h1>page user</h1>
     <div class="d-flex justify-content-between ">
         <p>
-            <a href="#" class="btn btn-success btn-lg">
+            <a href="?module=users&action=add" class="btn btn-success btn-lg">
                 + add user
             </a>
         </p>
     </div>
+    <?php echo getMsg($msg, $msgType); ?>
     <form action="" method="get">
         <div class="row mt-5">
             <div class="col-2">
@@ -138,7 +141,7 @@ if (!empty($_SERVER['QUERY_STRING'])) {
                             ?>
                         </td>
                         <td>
-                            <a href="#" class="btn btn-warning btn-sm">
+                            <a href="<?php echo _WEB_HOST_ROOT.'?module=users&action=edit&id='.$item['id']; ?>" class="btn btn-warning btn-sm">
                                 <i class="fa-solid fa-pen"></i>
                             </a>
                         </td>
